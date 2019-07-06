@@ -27,7 +27,7 @@ int counter = 0;
 
 void setup() {
   Serial.begin(9600);
-  Motor_caneta.attach(Servo_pin);
+  Motor_caneta.attach(Servo_pin); //Liga a instancia do Servo com o pino
   pinMode(botao_pin, INPUT);
   pinMode(X_pin, INPUT);
   pinMode(Y_pin, INPUT);
@@ -41,7 +41,7 @@ void loop() {
   //le o estado do botao e grava isso
   buttonState = digitalRead(botao_pin);
 
-  //Se o Botao for pressionado, adiciona isso no counter e da um delay --> "D"ebounce
+  //Se o Botao for pressionado, adiciona isso no counter e da um delay --> "Debounce"
   if (buttonState == HIGH) // 
   {
     counter++;
@@ -55,7 +55,7 @@ void loop() {
     Motor_caneta.write (150); }
   else if(counter == 3){  
     Motor_caneta.write (180);}
-  //else reset the counter to 0 which resets thr servo to 0 degrees
+  //Caso não for pressionado, retornar o 0 Graus.
   else{
    counter = 0;
   }
@@ -63,59 +63,58 @@ void loop() {
   int val_x = analogRead(X_pin);
   int val_y = analogRead(Y_pin);
 
-  //Motor Parado caso Joystick esteja no meio
+  //Motores Parado caso Joystick esteja no meio 
   if( (val_x > 450) && (val_x < 523) && (val_y > 450) && (val_y < 523)){
     delay(20);
   }
   else{
     //Mover o motor_x em uma direcao
     while (val_x >= 523){
-      // map the speed between 30 and 100 rpm
+      // Mapear a velocidade para 60 a 120 rpm
       int speed_x = map(val_x, 523, 1023, 60, 120);
-      // set motor speed
+      // Define a velocidade do motor
       Motor_x.setSpeed(speed_x);
  
-      // move the motor (1 step)
+      // Mover o motor em 1 passo
       Motor_x.step(1);
- 
+      // Grava informação do Potenciometro
       val_x = analogRead(X_pin);
     }
    //Mover o motor_x na outra direcao
     while (val_x <= 450){
-      // map the speed between 5 and 500 rpm
+      // Mapear a velocidade para 60 a 120 rpm
       int speed_x = map(val_x, 450, 0, 60, 120);
-      // set motor speed
+      // Define a velocidade do motor
       Motor_x.setSpeed(speed_x);
  
-      // move the motor (1 step)
+      // Mover o motor em 1 passo
       Motor_x.step(-1);
- 
+      // Grava informação do Potenciometro
       val_x = analogRead(X_pin);
     }
    }
-//////////////
  //Mover o motor_y em uma direcao
     while (val_y >= 523){
-      // map the speed between 30 and 100 rpm
+      // Mapear a velocidade para 60 a 120 rpm
       int speed_y = map(val_y, 523, 1023, 60, 120);
-      // set motor speed
+      // Define a velocidade do motor
       Motor_y.setSpeed(speed_y);
  
-      // move the motor (1 step)
+      // Mover o motor em 1 passo
       Motor_y.step(1);
- 
+      // Grava informação do Potenciometro
       val_y = analogRead(Y_pin);
     }
    //Mover o motor_y na outra direcao
     while (val_y <= 450){
-      // map the speed between 5 and 500 rpm
+      // Mapear a velocidade para 60 a 120 rpm
       int speed_y = map(val_y, 450, 0, 60, 120);
-      // set motor speed
+      // Define a velocidade do motor
       Motor_y.setSpeed(speed_y);
  
-      // move the motor (1 step)
+      // Mover o motor em 1 passo
       Motor_y.step(-1);
- 
+      // Grava informação do Potenciometro
       val_y = analogRead(Y_pin);
     }
    }
